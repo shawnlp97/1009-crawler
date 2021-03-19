@@ -1,18 +1,20 @@
 from Scraper import Scraper
 from bs4 import BeautifulSoup
-from textblob import TextBlob
-from time import sleep
-from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import *
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from time import sleep
+from selenium.common.exceptions import *
 import CustomExceptions as ex
+
 
 class RedditScraper(Scraper):
     """
-    The RedditScraper object scrapes contents of reddit posts comments based on a number entered by the user
+    The RedditScraper object scrapes all comments of reddit posts......
     """
     url = "https://reddit.com/search?q="
-    time_span = "&t=week"
+    time_span = "&t=month"
+    post_attr = "_eYtD2XCVieq6emjKBH3m"
+    comment_attr = {"class": "_1qeIAgB0cPwnLhDF9XSiJM"}
 
     def __init__(self, query, sample_size):
         super().__init__(query, sample_size)
@@ -21,11 +23,11 @@ class RedditScraper(Scraper):
         self.__file_name = "{}_reddit.csv".format(self.query)
         self.__fully_qualified_domain = self.url + self.query + self.time_span
         self.__browser = self.initialise_webdriver(self.fully_qualified_domain)
-        self.valid_comments = 0
 
     @property
     def reddit_comment(self):
         return self.__reddit_comment
+
     @reddit_comment.setter
     def reddit_comment(self, reddit_comment):
         self.__reddit_comment = reddit_comment
@@ -33,6 +35,7 @@ class RedditScraper(Scraper):
     @property
     def reddit_post(self):
         return self.__reddit_post
+
     @reddit_post.setter
     def reddit_post(self, reddit_post):
         self.__reddit_post = reddit_post
@@ -40,36 +43,34 @@ class RedditScraper(Scraper):
     @property
     def file_name(self):
         return self.__file_name
+
     @file_name.setter
     def file_name(self, file_name):
         self.__file_name = file_name
-    
+
     @property
     def fully_qualified_domain(self):
         return self.__fully_qualified_domain
+
     @fully_qualified_domain.setter
     def fully_qualified_domain(self, fully_qualified_domain):
         self.__fully_qualified_domain = fully_qualified_domain
-    
+
     @property
     def browser(self):
         return self.__browser
+
     @browser.setter
     def browser(self, browser):
         self.__browser = browser
 
-    @property
-    def valid_comments(self):
-        return self.__valid_comments
-    @valid_comments.setter
-    def valid_comments(self,valid_comments):
-        self.__valid_comments = valid_comments
-
     def scrape(self):
-
-        for post in self.browser.find_elements_by_class_name("FHCV02u6Cp2zYL0fhQPsO"):
-
-            print("SCRAPING POST: {}".format(post))
+        print("\n********************BEGIN REDDIT SCRAPE FOR QUERY: <{}>********************\n".format(self.query))
+        posts = self.browser.find_elements_by_class_name(RedditScraper.post_attr)
+        if len(posts) == 0:
+            raise ex.NoElementFound(RedditScraper.post_attr)
+        for post in posts:
+            print("SCRAPING POST: {}".format(post.text))
             try:
                 self.reddit_post.add(post)
             except ex.DuplicateEntryError:
@@ -85,40 +86,29 @@ class RedditScraper(Scraper):
             except ElementNotInteractableException as interact:
                 print(interact.msg)
                 continue
-            sleep(5)  # add explicit wait
+            sleep(4)
             soup = BeautifulSoup(self.browser.page_source, 'html.parser')
-            
-            redditpost = soup.find_all("div", attrs={"data-test-id": "comment"})
             comment_counter = 0
-            for comment in redditpost:
-                if self.sample_size == 0 or comment_counter == 2:
+            comments = soup.find_all("p", attrs=RedditScraper.comment_attr)
+            if len(comments) == 0:
+                raise ex.NoElementFound(RedditScraper.comment_attr)
+            for comment in comments:
+                if self.sample_size == 0 or comment_counter == 100:
                     break
                 else:
-                  try:
-                      #postsentiment = TextBlob(redditpost.get_text()).sentiment
-                      formatted_comment = comment.get_text().replace('\n', '')
-                      analyzed_comment = TextBlob(formatted_comment).sentiment
-                      if analyzed_comment.polarity != 0.0 and analyzed_comment.subjectivity != 0.0: #Impossible for both values to be 0, happens when text is unable to be parsed by textblob due to special characters
-                          self.valid_comments += 1
-                      self.vaccine_sentiment += analyzed_comment.polarity
-                      self.reddit_comment.append([comment.get_text()])
-                      self.sample_size -= 1
-                      comment_counter += 1
-                      print("\n[{}]{}\n".format(comment.get_text(), self.sample_size))
-                      print("----------sample size remaining:{} | comments taken from post:{}----------".format(self.sample_size, comment_counter))
-                   
-                  except ex.DuplicateEntryError:
-                      self.valid_comments -= 1
-                      print("\n***Duplicate comment detected***\n")
-
-            sleep(5)
+                    formatted_comment = comment.get_text().replace("\n", " ")
+                    self.reddit_comment.append(formatted_comment)
+                    self.sample_size -= 1
+                    comment_counter += 1
+                    print("Comment {}: [{}]".format(self.sample_size + 1, formatted_comment))
+            print(
+                "----------sample size remaining:{} | comments taken from post:{}----------".format(self.sample_size,
+                                                                                                    comment_counter))
             webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
             webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
-            sleep(5)
-
+            sleep(0.5)
             if self.sample_size == 0:
                 break
-        # if not enough comments, scroll and run again
         if self.sample_size > 0:
             print("-SCROLLING-\n" * 10)
             self.last_position, self.end_of_scroll_region = self.scroll_down_page(self.browser, self.last_position)
@@ -128,4 +118,4 @@ class RedditScraper(Scraper):
                 exit()
             else:
                 self.scrape()
-        return self.valid_comments
+        print("\n********************END REDDIT SCRAPE FOR QUERY: <{}>********************\n".format(self.query))
