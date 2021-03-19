@@ -1,17 +1,18 @@
 from Scraper import Scraper
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from textblob import TextBlob
 from time import sleep
+from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import *
+from selenium import webdriver
 import CustomExceptions as ex
 
 class RedditScraper(Scraper):
     """
-    The RedditScraper object scrapes all comments of reddit posts......
+    The RedditScraper object scrapes contents of reddit posts comments based on a number entered by the user
     """
     url = "https://reddit.com/search?q="
-    time_span = "&t=month"
+    time_span = "&t=week"
 
     def __init__(self, query, sample_size):
         super().__init__(query, sample_size)
@@ -20,6 +21,7 @@ class RedditScraper(Scraper):
         self.__file_name = "{}_reddit.csv".format(self.query)
         self.__fully_qualified_domain = self.url + self.query + self.time_span
         self.__browser = self.initialise_webdriver(self.fully_qualified_domain)
+        self.valid_comments = 0
 
     @property
     def reddit_comment(self):
@@ -56,7 +58,15 @@ class RedditScraper(Scraper):
     def browser(self, browser):
         self.__browser = browser
 
+    @property
+    def valid_comments(self):
+        return self.__valid_comments
+    @valid_comments.setter
+    def valid_comments(self,valid_comments):
+        self.__valid_comments = valid_comments
+
     def scrape(self):
+
         for post in self.browser.find_elements_by_class_name("FHCV02u6Cp2zYL0fhQPsO"):
 
             print("SCRAPING POST: {}".format(post))
@@ -75,25 +85,37 @@ class RedditScraper(Scraper):
             except ElementNotInteractableException as interact:
                 print(interact.msg)
                 continue
-            # self.fluent_wait(self.browser, "_1qeIAgB0cPwnLhDF9XSiJM", 3) #_3tw__eCCe7j-epNCKGXUKk
-            sleep(4)
+            sleep(5)  # add explicit wait
             soup = BeautifulSoup(self.browser.page_source, 'html.parser')
+            
+            redditpost = soup.find_all("div", attrs={"data-test-id": "comment"})
             comment_counter = 0
-            for comment in soup.find_all("p", attrs={"class": "_1qeIAgB0cPwnLhDF9XSiJM"}):
-                if self.sample_size == 0 or comment_counter == 100:
+            for comment in redditpost:
+                if self.sample_size == 0 or comment_counter == 2:
                     break
                 else:
-                    self.reddit_comment.append([comment.get_text()])
-                    self.sample_size -= 1
-                    comment_counter += 1
-                    print("[{}]{}".format(comment.get_text(), self.sample_size))
-            print(
-                "----------sample size remaining:{} | comments taken from post:{}----------".format(self.sample_size,
-                                                                                                    comment_counter))
+                  try:
+                      #postsentiment = TextBlob(redditpost.get_text()).sentiment
+                      formatted_comment = comment.get_text().replace('\n', '')
+                      analyzed_comment = TextBlob(formatted_comment).sentiment
+                      if analyzed_comment.polarity != 0.0 and analyzed_comment.subjectivity != 0.0: #Impossible for both values to be 0, happens when text is unable to be parsed by textblob due to special characters
+                          self.valid_comments += 1
+                      self.vaccine_sentiment += analyzed_comment.polarity
+                      self.reddit_comment.append([comment.get_text()])
+                      self.sample_size -= 1
+                      comment_counter += 1
+                      print("\n[{}]{}\n".format(comment.get_text(), self.sample_size))
+                      print("----------sample size remaining:{} | comments taken from post:{}----------".format(self.sample_size, comment_counter))
+                   
+                  except ex.DuplicateEntryError:
+                      self.valid_comments -= 1
+                      print("\n***Duplicate comment detected***\n")
 
+            sleep(5)
             webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
             webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
-            sleep(0.5)
+            sleep(5)
+
             if self.sample_size == 0:
                 break
         # if not enough comments, scroll and run again
@@ -106,3 +128,4 @@ class RedditScraper(Scraper):
                 exit()
             else:
                 self.scrape()
+        return self.valid_comments

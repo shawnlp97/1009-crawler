@@ -1,7 +1,6 @@
 class DuplicateEntryError(Exception):
     pass
 
-
 class Set_duplicate_detector(set):
     count = 0
 

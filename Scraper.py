@@ -9,13 +9,13 @@ from selenium.common.exceptions import *
 import csv
 import keyboard
 
-
 class Scraper(metaclass=ABCMeta):
-
     def __init__(self, query, sample_size):
         self.__query = query
         self.__sample_size = sample_size
         self.__vaccine_sentiment = 0
+        # self.__most_neg = ''       
+        # self.__most_neg_val = 1
         self.last_position = None
         self.end_of_scroll_region = None
 
@@ -40,7 +40,21 @@ class Scraper(metaclass=ABCMeta):
     def vaccine_sentiment(self, vaccine_sentiment):
         self.__vaccine_sentiment = vaccine_sentiment
 
-    def scroll_down_page(self, driver, last_position, num_seconds_to_load=2, scroll_attempt=0, max_attempts=5):
+    # @property
+    # def most_neg(self):
+    #     return self.__most_neg
+    # @most_neg.setter
+    # def most_neg(self, most_neg):
+    #     self.__most_neg = most_neg
+
+    # @property
+    # def most_neg_val(self):
+    #     return self.__most_neg_val
+    # @most_neg_val.setter
+    # def most_neg_val(self, most_neg_val):
+    #     self.__most_neg_val = most_neg_val
+
+    def scroll_down_page(self, driver, last_position, num_seconds_to_load=0.5, scroll_attempt=0, max_attempts=5):
         end_of_scroll_region = False
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         sleep(num_seconds_to_load)
@@ -53,7 +67,7 @@ class Scraper(metaclass=ABCMeta):
         last_position = curr_position
         return last_position, end_of_scroll_region
 
-    # Starts instance of web
+    #Starts instance of web
     def initialise_webdriver(self, fqdn):
         chrome_options = Options()
         chrome_options.add_experimental_option("detach", True)
@@ -61,8 +75,9 @@ class Scraper(metaclass=ABCMeta):
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--window-size=1920,1200")
+        # chrome_options.add_argument("--window-size=1920,1200")
         chrome_options.add_argument("--disable-notifications")
+        # chrome_options.add_argument("--headless")
         browser = webdriver.Chrome(options=chrome_options)
         browser.get(fqdn)
         sleep(5)
@@ -80,11 +95,11 @@ class Scraper(metaclass=ABCMeta):
             if attempt == 2:
                 pass
             self.fluent_wait(browser_object, element_class_name, attempt + 1)
-
+    
     @abstractmethod
     def scrape(self):
         pass
-
+    
     def csv_writer(self, file_name, content):
         try:
             with open(file_name, "w", newline='', encoding='utf-8') as csv_file:
@@ -98,5 +113,5 @@ class Scraper(metaclass=ABCMeta):
             print(e.strerror)
             print("TRY CLOSING <{}> ON DESKTOP IF OPEN AND PRESS ENTER".format(file_name))
             while not keyboard.is_pressed('enter'):
-                pass
+                passs
             self.csv_writer()
