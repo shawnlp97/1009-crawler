@@ -4,6 +4,7 @@ from Scraper import Scraper
 from bs4 import BeautifulSoup
 import CustomExceptions as ex
 
+
 class TwitterScraper(Scraper):
     """
     The TwitterScraper object is used to scrape the content of tweets based on a query string (Name of vaccine)
@@ -28,15 +29,15 @@ class TwitterScraper(Scraper):
     url = "https://twitter.com/search?q="
     tab = "&f=live"
     tweet_attr = {"class":
-                       "css-901oao r-18jsvk2 r-1qd0xha r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-bnwqim r-qvutc0"}
-                       
+                      "css-901oao r-18jsvk2 r-1qd0xha r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-bnwqim r-qvutc0"}
+
     def __init__(self, query, sample_size):
         super().__init__(query, sample_size)
         self.__twitter_post = ex.Set_duplicate_detector()
         self.__csv_input_formatter = []
         self.__file_name = "{}_twitter.csv".format(self.query)
         self.__fully_qualified_domain = self.url + self.query + self.tab
-        self.__browser = self.initialise_webdriver(self.fully_qualified_domain)
+        self.__browser = self.initialise_webdriver(self.fully_qualified_domain, self.tweet_attr.get("class"))
 
     @property
     def twitter_post(self):

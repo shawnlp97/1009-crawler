@@ -41,7 +41,7 @@ class RedditScraper(Scraper):
         self.__reddit_post = ex.Set_duplicate_detector()
         self.__file_name = "{}_reddit.csv".format(self.query)
         self.__fully_qualified_domain = self.url + self.query + self.time_span
-        self.__browser = self.initialise_webdriver(self.fully_qualified_domain)
+        self.__browser = self.initialise_webdriver(self.fully_qualified_domain, self.post_attr)
 
     @property
     def reddit_comment(self):
