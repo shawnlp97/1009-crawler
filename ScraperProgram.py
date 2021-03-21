@@ -1,10 +1,9 @@
 """ ScraperProgram.py is the main program where code should be run from """
 
-from Scraper import Scraper
 from TwitterScraper import TwitterScraper
 from RedditScraper import RedditScraper
 from VaccinePolarity import VaccinePolarity
-from textblob import sentiments
+
 
 def main():
     """
@@ -20,7 +19,7 @@ def main():
                 - Enter 1 for Twitter        
                 - Enter 2 for Reddit
                 """))
-            if (choose_to_crawl == 1 or choose_to_crawl == 2):
+            if choose_to_crawl == 1 or choose_to_crawl == 2:
                 break
             else:
                 raise ValueError
@@ -30,18 +29,18 @@ def main():
 
     while True:
         try:
-            if (choose_to_crawl == 1):
+            if choose_to_crawl == 1:
                 sample = int(input("Please enter sample size of tweets to scrape (minimum 10): "))
-            elif (choose_to_crawl == 2):
+            elif choose_to_crawl == 2:
                 sample = int(input("Please enter sample size of reddit comments to scrape (minimum 10): "))
-            if (isinstance(sample, int) and sample >= 10):  # Checks if user input is positive int
+            if isinstance(sample, int) and sample >= 10:  # Checks if user input is positive int
                 break
             else:
                 raise ValueError
         except ValueError:
             print("Please enter a positive number more than/equal 10!")
 
-    if (choose_to_crawl == 1):
+    if choose_to_crawl == 1:
         # Prompt for search query used to crawl tweets
         twitcrawler_johnson = TwitterScraper("johnson and johnson vaccine", sample)
         twitcrawler_johnson.scrape()
@@ -64,7 +63,7 @@ def main():
         avg_pfizer = VaccinePolarity().get_avg_polarity(twitcrawler_pfizer.csv_input_formatter)
         print("Pfizer average polarity is {:.6f}".format(avg_pfizer))
 
-    elif (choose_to_crawl == 2):
+    elif choose_to_crawl == 2:
         reddit_crawler_johnson = RedditScraper("johnson and johnson vaccine", sample)
         reddit_crawler_johnson.scrape()
         reddit_crawler_johnson.csv_writer(reddit_crawler_johnson.file_name, reddit_crawler_johnson.reddit_comment)
@@ -85,7 +84,7 @@ def main():
 
         avg_pfizer = VaccinePolarity().get_avg_polarity(reddit_crawler_pfizer.reddit_comment)
         print("Pfizer average polarity is {:.6f}".format(avg_pfizer))
-    
+
+
 if __name__ == '__main__':
     main()
-

@@ -106,7 +106,7 @@ class TwitterScraper(Scraper):
                         print("Tweet {}: [{}]".format(self.sample_size + 1,
                                                       formatted_tweet))
                     except ex.DuplicateEntryError:
-                        print("***duplicate tweet detected***")
+                        print("***duplicate tweet detected, skipping tweet***")
 
             self.last_position, end_of_scroll_region = self.scroll_down_page(self.browser, self.last_position)
         print("\nTOTAL DUPLICATES: " + str(self.twitter_post.count))

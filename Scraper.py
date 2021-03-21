@@ -9,7 +9,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import *
 import csv
-# import keyboard
+import keyboard
+
 
 class Scraper(metaclass=ABCMeta):
     """
@@ -23,6 +24,7 @@ class Scraper(metaclass=ABCMeta):
         last_position (int): Location of page in int form 
         end_of_scroll_region (boolean): Boolean value signifying if browser has reached end of scroll region
     """
+
     def __init__(self, query, sample_size):
         self.__query = query
         self.__sample_size = sample_size
@@ -48,7 +50,7 @@ class Scraper(metaclass=ABCMeta):
     @property
     def last_position(self):
         return self.__last_position
-    
+
     @last_position.setter
     def last_position(self, last_position):
         self.__last_position = last_position
@@ -56,7 +58,7 @@ class Scraper(metaclass=ABCMeta):
     @property
     def end_of_scroll_region(self):
         return self.__end_of_scroll_region
-    
+
     @end_of_scroll_region.setter
     def end_of_scroll_region(self, end_of_scroll_region):
         self.__end_of_scroll_region = end_of_scroll_region
@@ -85,15 +87,16 @@ class Scraper(metaclass=ABCMeta):
         return self.last_position, self.end_of_scroll_region
 
     # Starts instance of web
-    def initialise_webdriver(self, fqdn):
+    def initialise_webdriver(self, fqdn, attr):
         """
         Uses Selenium WebDriver to open twitter/reddit search results for query
 
         Args:
             fqdn (str): Full url to directly access search results of query
+            attr (str): Contains class name of element to wait for before reaching the return statement of function
         """
         chrome_options = Options()
-        chrome_options.add_experimental_option("detach", True)
+        # chrome_options.add_experimental_option("detach", True)
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-extensions")
@@ -103,7 +106,7 @@ class Scraper(metaclass=ABCMeta):
         chrome_options.add_argument("--disable-notifications")
         browser = webdriver.Chrome(options=chrome_options)
         browser.get(fqdn)
-        sleep(5)
+        self.fluent_wait(browser, attr, 5)
         return browser
 
     def fluent_wait(self, browser_object, element_class_name, max_wait, attempt=0):
