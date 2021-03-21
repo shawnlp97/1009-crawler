@@ -115,12 +115,13 @@ class Scraper(metaclass=ABCMeta):
         return self.last_position, self.end_of_scroll_region
 
     # Starts instance of web
-    def initialise_webdriver(self, fqdn):
+    def initialise_webdriver(self, fqdn, attr):
         &#34;&#34;&#34;
         Uses Selenium WebDriver to open twitter/reddit search results for query
 
         Args:
             fqdn (str): Full url to directly access search results of query
+            attr (str): Contains class name of element to wait for before reaching the return statement of function
         &#34;&#34;&#34;
         chrome_options = Options()
         chrome_options.add_experimental_option(&#34;detach&#34;, True)
@@ -133,7 +134,7 @@ class Scraper(metaclass=ABCMeta):
         chrome_options.add_argument(&#34;--disable-notifications&#34;)
         browser = webdriver.Chrome(options=chrome_options)
         browser.get(fqdn)
-        sleep(5)
+        self.fluent_wait(browser, attr, 5)
         return browser
 
     def fluent_wait(self, browser_object, element_class_name, max_wait, attempt=0):
@@ -291,12 +292,13 @@ end_of_scroll_region (boolean): Boolean value signifying if browser has reached 
         return self.last_position, self.end_of_scroll_region
 
     # Starts instance of web
-    def initialise_webdriver(self, fqdn):
+    def initialise_webdriver(self, fqdn, attr):
         &#34;&#34;&#34;
         Uses Selenium WebDriver to open twitter/reddit search results for query
 
         Args:
             fqdn (str): Full url to directly access search results of query
+            attr (str): Contains class name of element to wait for before reaching the return statement of function
         &#34;&#34;&#34;
         chrome_options = Options()
         chrome_options.add_experimental_option(&#34;detach&#34;, True)
@@ -309,7 +311,7 @@ end_of_scroll_region (boolean): Boolean value signifying if browser has reached 
         chrome_options.add_argument(&#34;--disable-notifications&#34;)
         browser = webdriver.Chrome(options=chrome_options)
         browser.get(fqdn)
-        sleep(5)
+        self.fluent_wait(browser, attr, 5)
         return browser
 
     def fluent_wait(self, browser_object, element_class_name, max_wait, attempt=0):
@@ -498,7 +500,7 @@ def sample_size(self):
 </details>
 </dd>
 <dt id="1009-crawler.Scraper.Scraper.initialise_webdriver"><code class="name flex">
-<span>def <span class="ident">initialise_webdriver</span></span>(<span>self, fqdn)</span>
+<span>def <span class="ident">initialise_webdriver</span></span>(<span>self, fqdn, attr)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Uses Selenium WebDriver to open twitter/reddit search results for query</p>
@@ -506,17 +508,20 @@ def sample_size(self):
 <dl>
 <dt><strong><code>fqdn</code></strong> :&ensp;<code>str</code></dt>
 <dd>Full url to directly access search results of query</dd>
+<dt><strong><code>attr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Contains class name of element to wait for before reaching the return statement of function</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def initialise_webdriver(self, fqdn):
+<pre><code class="python">def initialise_webdriver(self, fqdn, attr):
     &#34;&#34;&#34;
     Uses Selenium WebDriver to open twitter/reddit search results for query
 
     Args:
         fqdn (str): Full url to directly access search results of query
+        attr (str): Contains class name of element to wait for before reaching the return statement of function
     &#34;&#34;&#34;
     chrome_options = Options()
     chrome_options.add_experimental_option(&#34;detach&#34;, True)
@@ -529,7 +534,7 @@ def sample_size(self):
     chrome_options.add_argument(&#34;--disable-notifications&#34;)
     browser = webdriver.Chrome(options=chrome_options)
     browser.get(fqdn)
-    sleep(5)
+    self.fluent_wait(browser, attr, 5)
     return browser</code></pre>
 </details>
 </dd>

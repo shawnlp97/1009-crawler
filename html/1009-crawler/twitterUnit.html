@@ -38,19 +38,21 @@ from Scraper import Scraper
 class TestWeb(unittest.TestCase):
     &#34;&#34;&#34;
     TestWeb is used to unit test twitter and check for availability of the website for scraping purposes
-    
     &#34;&#34;&#34;
 
     def setUp(self):
+        &#34;&#34;&#34;setUp: set up the base of the case which will be used eventually for unit test.&#34;&#34;&#34;
         print(&#34;Set up&#34;)
         self.driver = webdriver.Chrome()
         self.driver.get(&#34;https://twitter.com/search?q=mordena%20vaccine&amp;src=typed_query&#34;)
 
     def test_twitter1(self):
+        &#34;&#34;&#34;test_twitter1: Test the value in URL given to check availibility of Twitter&#34;&#34;&#34;
         searchpage = webpages.Searchpage(self.driver)
         assert searchpage.is_result_match()
 
     def tearDown(self):
+        &#34;&#34;&#34;tearDown: Tears down the test scenario, basically acting as a cleaning function for the test case&#34;&#34;&#34;
         self.driver.close()
     
     
@@ -87,19 +89,21 @@ not have a method with the specified name.</p></div>
 <pre><code class="python">class TestWeb(unittest.TestCase):
     &#34;&#34;&#34;
     TestWeb is used to unit test twitter and check for availability of the website for scraping purposes
-    
     &#34;&#34;&#34;
 
     def setUp(self):
+        &#34;&#34;&#34;setUp: set up the base of the case which will be used eventually for unit test.&#34;&#34;&#34;
         print(&#34;Set up&#34;)
         self.driver = webdriver.Chrome()
         self.driver.get(&#34;https://twitter.com/search?q=mordena%20vaccine&amp;src=typed_query&#34;)
 
     def test_twitter1(self):
+        &#34;&#34;&#34;test_twitter1: Test the value in URL given to check availibility of Twitter&#34;&#34;&#34;
         searchpage = webpages.Searchpage(self.driver)
         assert searchpage.is_result_match()
 
     def tearDown(self):
+        &#34;&#34;&#34;tearDown: Tears down the test scenario, basically acting as a cleaning function for the test case&#34;&#34;&#34;
         self.driver.close()</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -112,12 +116,13 @@ not have a method with the specified name.</p></div>
 <span>def <span class="ident">setUp</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Hook method for setting up the test fixture before exercising it.</p></div>
+<div class="desc"><p>setUp: set up the base of the case which will be used eventually for unit test.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setUp(self):
+    &#34;&#34;&#34;setUp: set up the base of the case which will be used eventually for unit test.&#34;&#34;&#34;
     print(&#34;Set up&#34;)
     self.driver = webdriver.Chrome()
     self.driver.get(&#34;https://twitter.com/search?q=mordena%20vaccine&amp;src=typed_query&#34;)</code></pre>
@@ -127,12 +132,13 @@ not have a method with the specified name.</p></div>
 <span>def <span class="ident">tearDown</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Hook method for deconstructing the test fixture after testing it.</p></div>
+<div class="desc"><p>tearDown: Tears down the test scenario, basically acting as a cleaning function for the test case</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def tearDown(self):
+    &#34;&#34;&#34;tearDown: Tears down the test scenario, basically acting as a cleaning function for the test case&#34;&#34;&#34;
     self.driver.close()</code></pre>
 </details>
 </dd>
@@ -140,12 +146,13 @@ not have a method with the specified name.</p></div>
 <span>def <span class="ident">test_twitter1</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>test_twitter1: Test the value in URL given to check availibility of Twitter</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_twitter1(self):
+    &#34;&#34;&#34;test_twitter1: Test the value in URL given to check availibility of Twitter&#34;&#34;&#34;
     searchpage = webpages.Searchpage(self.driver)
     assert searchpage.is_result_match()</code></pre>
 </details>

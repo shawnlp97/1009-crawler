@@ -66,7 +66,7 @@ class TwitterScraper(Scraper):
         self.__csv_input_formatter = []
         self.__file_name = &#34;{}_twitter.csv&#34;.format(self.query)
         self.__fully_qualified_domain = self.url + self.query + self.tab
-        self.__browser = self.initialise_webdriver(self.fully_qualified_domain)
+        self.__browser = self.initialise_webdriver(self.fully_qualified_domain, self.tweet_attr.get(&#34;class&#34;))
 
     @property
     def twitter_post(self):
@@ -220,7 +220,7 @@ browser (webdriver): Starts a selenium webdriver instance which open twitter sea
         self.__csv_input_formatter = []
         self.__file_name = &#34;{}_twitter.csv&#34;.format(self.query)
         self.__fully_qualified_domain = self.url + self.query + self.tab
-        self.__browser = self.initialise_webdriver(self.fully_qualified_domain)
+        self.__browser = self.initialise_webdriver(self.fully_qualified_domain, self.tweet_attr.get(&#34;class&#34;))
 
     @property
     def twitter_post(self):
