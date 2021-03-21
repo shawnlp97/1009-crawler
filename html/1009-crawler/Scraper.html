@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>1009-crawler-merged_ProgramNLP.Scraper API documentation</title>
+<title>1009-crawler.Scraper API documentation</title>
 <meta name="description" content="Scraper.py is the main Scraper superclass extending to the TwitterScraper and RedditScraper classes" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>1009-crawler-merged_ProgramNLP.Scraper</code></h1>
+<h1 class="title">Module <code>1009-crawler.Scraper</code></h1>
 </header>
 <section id="section-intro">
 <p>Scraper.py is the main Scraper superclass extending to the TwitterScraper and RedditScraper classes</p>
@@ -195,7 +195,7 @@ class Scraper(metaclass=ABCMeta):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper"><code class="flex name class">
+<dt id="1009-crawler.Scraper.Scraper"><code class="flex name class">
 <span>class <span class="ident">Scraper</span></span>
 <span>(</span><span>query, sample_size)</span>
 </code></dt>
@@ -363,7 +363,7 @@ end_of_scroll_region (boolean): Boolean value signifying if browser has reached 
 </details>
 <h3>Instance variables</h3>
 <dl>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.end_of_scroll_region"><code class="name">var <span class="ident">end_of_scroll_region</span></code></dt>
+<dt id="1009-crawler.Scraper.Scraper.end_of_scroll_region"><code class="name">var <span class="ident">end_of_scroll_region</span></code></dt>
 <dd>
 <div class="desc"></div>
 <details class="source">
@@ -375,7 +375,7 @@ def end_of_scroll_region(self):
     return self.__end_of_scroll_region</code></pre>
 </details>
 </dd>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.last_position"><code class="name">var <span class="ident">last_position</span></code></dt>
+<dt id="1009-crawler.Scraper.Scraper.last_position"><code class="name">var <span class="ident">last_position</span></code></dt>
 <dd>
 <div class="desc"></div>
 <details class="source">
@@ -387,7 +387,7 @@ def last_position(self):
     return self.__last_position</code></pre>
 </details>
 </dd>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.query"><code class="name">var <span class="ident">query</span></code></dt>
+<dt id="1009-crawler.Scraper.Scraper.query"><code class="name">var <span class="ident">query</span></code></dt>
 <dd>
 <div class="desc"></div>
 <details class="source">
@@ -399,7 +399,7 @@ def query(self):
     return self.__query</code></pre>
 </details>
 </dd>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.sample_size"><code class="name">var <span class="ident">sample_size</span></code></dt>
+<dt id="1009-crawler.Scraper.Scraper.sample_size"><code class="name">var <span class="ident">sample_size</span></code></dt>
 <dd>
 <div class="desc"></div>
 <details class="source">
@@ -414,7 +414,7 @@ def sample_size(self):
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.csv_writer"><code class="name flex">
+<dt id="1009-crawler.Scraper.Scraper.csv_writer"><code class="name flex">
 <span>def <span class="ident">csv_writer</span></span>(<span>self, file_name, content)</span>
 </code></dt>
 <dd>
@@ -454,7 +454,7 @@ def sample_size(self):
         self.csv_writer(file_name, content)</code></pre>
 </details>
 </dd>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.fluent_wait"><code class="name flex">
+<dt id="1009-crawler.Scraper.Scraper.fluent_wait"><code class="name flex">
 <span>def <span class="ident">fluent_wait</span></span>(<span>self, browser_object, element_class_name, max_wait, attempt=0)</span>
 </code></dt>
 <dd>
@@ -497,7 +497,7 @@ def sample_size(self):
         self.fluent_wait(browser_object, element_class_name, attempt + 1)</code></pre>
 </details>
 </dd>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.initialise_webdriver"><code class="name flex">
+<dt id="1009-crawler.Scraper.Scraper.initialise_webdriver"><code class="name flex">
 <span>def <span class="ident">initialise_webdriver</span></span>(<span>self, fqdn)</span>
 </code></dt>
 <dd>
@@ -533,7 +533,7 @@ def sample_size(self):
     return browser</code></pre>
 </details>
 </dd>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.scrape"><code class="name flex">
+<dt id="1009-crawler.Scraper.Scraper.scrape"><code class="name flex">
 <span>def <span class="ident">scrape</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -547,7 +547,7 @@ def scrape(self):
     pass</code></pre>
 </details>
 </dd>
-<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.scroll_down_page"><code class="name flex">
+<dt id="1009-crawler.Scraper.Scraper.scroll_down_page"><code class="name flex">
 <span>def <span class="ident">scroll_down_page</span></span>(<span>self, driver, last_position, num_seconds_to_load=2, scroll_attempt=0, max_attempts=5)</span>
 </code></dt>
 <dd>
@@ -606,23 +606,23 @@ def scrape(self):
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="1009-crawler-merged_ProgramNLP" href="index.html">1009-crawler-merged_ProgramNLP</a></code></li>
+<li><code><a title="1009-crawler" href="index.html">1009-crawler</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper">Scraper</a></code></h4>
+<h4><code><a title="1009-crawler.Scraper.Scraper" href="#1009-crawler.Scraper.Scraper">Scraper</a></code></h4>
 <ul class="">
-<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.csv_writer" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.csv_writer">csv_writer</a></code></li>
-<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.end_of_scroll_region" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.end_of_scroll_region">end_of_scroll_region</a></code></li>
-<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.fluent_wait" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.fluent_wait">fluent_wait</a></code></li>
-<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.initialise_webdriver" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.initialise_webdriver">initialise_webdriver</a></code></li>
-<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.last_position" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.last_position">last_position</a></code></li>
-<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.query" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.query">query</a></code></li>
-<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.sample_size" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.sample_size">sample_size</a></code></li>
-<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.scrape" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.scrape">scrape</a></code></li>
-<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.scroll_down_page" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.scroll_down_page">scroll_down_page</a></code></li>
+<li><code><a title="1009-crawler.Scraper.Scraper.csv_writer" href="#1009-crawler.Scraper.Scraper.csv_writer">csv_writer</a></code></li>
+<li><code><a title="1009-crawler.Scraper.Scraper.end_of_scroll_region" href="#1009-crawler.Scraper.Scraper.end_of_scroll_region">end_of_scroll_region</a></code></li>
+<li><code><a title="1009-crawler.Scraper.Scraper.fluent_wait" href="#1009-crawler.Scraper.Scraper.fluent_wait">fluent_wait</a></code></li>
+<li><code><a title="1009-crawler.Scraper.Scraper.initialise_webdriver" href="#1009-crawler.Scraper.Scraper.initialise_webdriver">initialise_webdriver</a></code></li>
+<li><code><a title="1009-crawler.Scraper.Scraper.last_position" href="#1009-crawler.Scraper.Scraper.last_position">last_position</a></code></li>
+<li><code><a title="1009-crawler.Scraper.Scraper.query" href="#1009-crawler.Scraper.Scraper.query">query</a></code></li>
+<li><code><a title="1009-crawler.Scraper.Scraper.sample_size" href="#1009-crawler.Scraper.Scraper.sample_size">sample_size</a></code></li>
+<li><code><a title="1009-crawler.Scraper.Scraper.scrape" href="#1009-crawler.Scraper.Scraper.scrape">scrape</a></code></li>
+<li><code><a title="1009-crawler.Scraper.Scraper.scroll_down_page" href="#1009-crawler.Scraper.Scraper.scroll_down_page">scroll_down_page</a></code></li>
 </ul>
 </li>
 </ul>
