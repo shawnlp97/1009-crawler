@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>1009-crawler-merged_ProgramNLP.Scraper API documentation</title>
+<meta name="description" content="Scraper.py is the main Scraper superclass extending to the TwitterScraper and RedditScraper classes" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>1009-crawler-merged_ProgramNLP.Scraper</code></h1>
+</header>
+<section id="section-intro">
+<p>Scraper.py is the main Scraper superclass extending to the TwitterScraper and RedditScraper classes</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34; Scraper.py is the main Scraper superclass extending to the TwitterScraper and RedditScraper classes &#34;&#34;&#34;
+
+from abc import ABCMeta, abstractmethod
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from time import sleep
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import *
+import csv
+# import keyboard
+
+class Scraper(metaclass=ABCMeta):
+    &#34;&#34;&#34;
+    The Scraper superclass is used to extend to subclasses RedditScraper and TwitterScraper.
+
+    Args:
+        query (str): Used as part of fully qualified domain name to to directly open twitter to display search results.
+        sample_size (int): Controls number of tweets/posts that will be scraped from the social media
+
+    Attributes/Class Variables:
+    
+        last_position (int): Location of page in int form 
+        end_of_scroll_region (boolean): Boolean value signifying if browser has reached end of scroll region
+    &#34;&#34;&#34;
+    def __init__(self, query, sample_size):
+        self.__query = query
+        self.__sample_size = sample_size
+        self.__last_position = None
+        self.__end_of_scroll_region = None
+
+    @property
+    def query(self):
+        return self.__query
+
+    @query.setter
+    def query(self, query):
+        self.__query = query
+
+    @property
+    def sample_size(self):
+        return self.__sample_size
+
+    @sample_size.setter
+    def sample_size(self, sample_size):
+        self.__sample_size = sample_size
+
+    @property
+    def last_position(self):
+        return self.__last_position
+    
+    @last_position.setter
+    def last_position(self, last_position):
+        self.__last_position = last_position
+
+    @property
+    def end_of_scroll_region(self):
+        return self.__end_of_scroll_region
+    
+    @end_of_scroll_region.setter
+    def end_of_scroll_region(self, end_of_scroll_region):
+        self.__end_of_scroll_region = end_of_scroll_region
+
+    def scroll_down_page(self, driver, last_position, num_seconds_to_load=2, scroll_attempt=0, max_attempts=5):
+        &#34;&#34;&#34;
+        Called when end of page is reached to load more tweets and to retrieve more comments
+
+        Args:
+            driver (WebDriver): WebDriver instance, browser
+            last_position (int): Location of page
+            num_seconds_to_load (int): Time to sleep so page can load all elements
+            scroll_attempt (int): Track number of tries to scroll
+            max_attempts (int): Maximum number of tries
+        &#34;&#34;&#34;
+        self.end_of_scroll_region = False
+        driver.execute_script(&#34;window.scrollTo(0, document.body.scrollHeight);&#34;)
+        sleep(num_seconds_to_load)
+        curr_position = driver.execute_script(&#34;return window.pageYOffset;&#34;)
+        if curr_position == self.last_position:
+            if scroll_attempt &lt; max_attempts:
+                end_of_scroll_region = True
+            else:
+                self.scroll_down_page(last_position, curr_position, scroll_attempt + 1)
+        self.last_position = curr_position
+        return self.last_position, self.end_of_scroll_region
+
+    # Starts instance of web
+    def initialise_webdriver(self, fqdn):
+        &#34;&#34;&#34;
+        Uses Selenium WebDriver to open twitter/reddit search results for query
+
+        Args:
+            fqdn (str): Full url to directly access search results of query
+        &#34;&#34;&#34;
+        chrome_options = Options()
+        chrome_options.add_experimental_option(&#34;detach&#34;, True)
+        chrome_options.add_experimental_option(&#39;excludeSwitches&#39;, [&#39;enable-logging&#39;])
+        chrome_options.add_argument(&#34;--headless&#34;)
+        chrome_options.add_argument(&#34;--disable-extensions&#34;)
+        chrome_options.add_argument(&#34;--disable-dev-shm-usage&#34;)
+        chrome_options.add_argument(&#34;--no-sandbox&#34;)
+        chrome_options.add_argument(&#34;--window-size=1920,1200&#34;)
+        chrome_options.add_argument(&#34;--disable-notifications&#34;)
+        browser = webdriver.Chrome(options=chrome_options)
+        browser.get(fqdn)
+        sleep(5)
+        return browser
+
+    def fluent_wait(self, browser_object, element_class_name, max_wait, attempt=0):
+        &#34;&#34;&#34;
+        Used to wait until specified element is loaded on page
+
+        Args:
+            browser_object (WebDriver): Current instance of WebDriver/Browser that is being scraped
+            element_class_name (str): Name of element to wait for
+            max_wait (int): Maximum time to wait before exception is raised (Can&#39;t wait forever)
+            attempt (int): Tracks number of tries
+        &#34;&#34;&#34;
+        try:
+            WebDriverWait(browser_object, max_wait, poll_frequency=0.5,
+                          ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException]).until(
+                EC.visibility_of_all_elements_located((By.CLASS_NAME, element_class_name))
+            )
+        except TimeoutException:
+            pass
+        except StaleElementReferenceException:
+            if attempt == 2:
+                pass
+            self.fluent_wait(browser_object, element_class_name, attempt + 1)
+
+    @abstractmethod
+    def scrape(self):
+        pass
+
+    def csv_writer(self, file_name, content):
+        &#34;&#34;&#34;
+        This function writes all scraped tweets/comments to a csv file
+
+        Args:
+            file_name (str):  Name of file to create and write scraped data to
+            content (list): Contents all scraped data in list form
+        &#34;&#34;&#34;
+        try:
+            with open(file_name, &#34;w&#34;, newline=&#39;&#39;, encoding=&#39;utf-8&#39;) as csv_file:
+                writer = csv.writer(csv_file, delimiter=&#39;,&#39;)
+                try:
+                    writer.writerows(content)
+                except UnicodeError:
+                    pass
+            csv_file.close()
+        except PermissionError as e:
+            print(e.strerror)
+            print(&#34;TRY CLOSING &lt;{}&gt; ON DESKTOP IF OPEN AND PRESS ENTER&#34;.format(file_name))
+            while not keyboard.is_pressed(&#39;enter&#39;):
+                pass
+            self.csv_writer(file_name, content)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper"><code class="flex name class">
+<span>class <span class="ident">Scraper</span></span>
+<span>(</span><span>query, sample_size)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The Scraper superclass is used to extend to subclasses RedditScraper and TwitterScraper.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>query</code></strong> :&ensp;<code>str</code></dt>
+<dd>Used as part of fully qualified domain name to to directly open twitter to display search results.</dd>
+<dt><strong><code>sample_size</code></strong> :&ensp;<code>int</code></dt>
+<dd>Controls number of tweets/posts that will be scraped from the social media</dd>
+</dl>
+<p>Attributes/Class Variables:</p>
+<pre><code>last_position (int): Location of page in int form 
+end_of_scroll_region (boolean): Boolean value signifying if browser has reached end of scroll region
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Scraper(metaclass=ABCMeta):
+    &#34;&#34;&#34;
+    The Scraper superclass is used to extend to subclasses RedditScraper and TwitterScraper.
+
+    Args:
+        query (str): Used as part of fully qualified domain name to to directly open twitter to display search results.
+        sample_size (int): Controls number of tweets/posts that will be scraped from the social media
+
+    Attributes/Class Variables:
+    
+        last_position (int): Location of page in int form 
+        end_of_scroll_region (boolean): Boolean value signifying if browser has reached end of scroll region
+    &#34;&#34;&#34;
+    def __init__(self, query, sample_size):
+        self.__query = query
+        self.__sample_size = sample_size
+        self.__last_position = None
+        self.__end_of_scroll_region = None
+
+    @property
+    def query(self):
+        return self.__query
+
+    @query.setter
+    def query(self, query):
+        self.__query = query
+
+    @property
+    def sample_size(self):
+        return self.__sample_size
+
+    @sample_size.setter
+    def sample_size(self, sample_size):
+        self.__sample_size = sample_size
+
+    @property
+    def last_position(self):
+        return self.__last_position
+    
+    @last_position.setter
+    def last_position(self, last_position):
+        self.__last_position = last_position
+
+    @property
+    def end_of_scroll_region(self):
+        return self.__end_of_scroll_region
+    
+    @end_of_scroll_region.setter
+    def end_of_scroll_region(self, end_of_scroll_region):
+        self.__end_of_scroll_region = end_of_scroll_region
+
+    def scroll_down_page(self, driver, last_position, num_seconds_to_load=2, scroll_attempt=0, max_attempts=5):
+        &#34;&#34;&#34;
+        Called when end of page is reached to load more tweets and to retrieve more comments
+
+        Args:
+            driver (WebDriver): WebDriver instance, browser
+            last_position (int): Location of page
+            num_seconds_to_load (int): Time to sleep so page can load all elements
+            scroll_attempt (int): Track number of tries to scroll
+            max_attempts (int): Maximum number of tries
+        &#34;&#34;&#34;
+        self.end_of_scroll_region = False
+        driver.execute_script(&#34;window.scrollTo(0, document.body.scrollHeight);&#34;)
+        sleep(num_seconds_to_load)
+        curr_position = driver.execute_script(&#34;return window.pageYOffset;&#34;)
+        if curr_position == self.last_position:
+            if scroll_attempt &lt; max_attempts:
+                end_of_scroll_region = True
+            else:
+                self.scroll_down_page(last_position, curr_position, scroll_attempt + 1)
+        self.last_position = curr_position
+        return self.last_position, self.end_of_scroll_region
+
+    # Starts instance of web
+    def initialise_webdriver(self, fqdn):
+        &#34;&#34;&#34;
+        Uses Selenium WebDriver to open twitter/reddit search results for query
+
+        Args:
+            fqdn (str): Full url to directly access search results of query
+        &#34;&#34;&#34;
+        chrome_options = Options()
+        chrome_options.add_experimental_option(&#34;detach&#34;, True)
+        chrome_options.add_experimental_option(&#39;excludeSwitches&#39;, [&#39;enable-logging&#39;])
+        chrome_options.add_argument(&#34;--headless&#34;)
+        chrome_options.add_argument(&#34;--disable-extensions&#34;)
+        chrome_options.add_argument(&#34;--disable-dev-shm-usage&#34;)
+        chrome_options.add_argument(&#34;--no-sandbox&#34;)
+        chrome_options.add_argument(&#34;--window-size=1920,1200&#34;)
+        chrome_options.add_argument(&#34;--disable-notifications&#34;)
+        browser = webdriver.Chrome(options=chrome_options)
+        browser.get(fqdn)
+        sleep(5)
+        return browser
+
+    def fluent_wait(self, browser_object, element_class_name, max_wait, attempt=0):
+        &#34;&#34;&#34;
+        Used to wait until specified element is loaded on page
+
+        Args:
+            browser_object (WebDriver): Current instance of WebDriver/Browser that is being scraped
+            element_class_name (str): Name of element to wait for
+            max_wait (int): Maximum time to wait before exception is raised (Can&#39;t wait forever)
+            attempt (int): Tracks number of tries
+        &#34;&#34;&#34;
+        try:
+            WebDriverWait(browser_object, max_wait, poll_frequency=0.5,
+                          ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException]).until(
+                EC.visibility_of_all_elements_located((By.CLASS_NAME, element_class_name))
+            )
+        except TimeoutException:
+            pass
+        except StaleElementReferenceException:
+            if attempt == 2:
+                pass
+            self.fluent_wait(browser_object, element_class_name, attempt + 1)
+
+    @abstractmethod
+    def scrape(self):
+        pass
+
+    def csv_writer(self, file_name, content):
+        &#34;&#34;&#34;
+        This function writes all scraped tweets/comments to a csv file
+
+        Args:
+            file_name (str):  Name of file to create and write scraped data to
+            content (list): Contents all scraped data in list form
+        &#34;&#34;&#34;
+        try:
+            with open(file_name, &#34;w&#34;, newline=&#39;&#39;, encoding=&#39;utf-8&#39;) as csv_file:
+                writer = csv.writer(csv_file, delimiter=&#39;,&#39;)
+                try:
+                    writer.writerows(content)
+                except UnicodeError:
+                    pass
+            csv_file.close()
+        except PermissionError as e:
+            print(e.strerror)
+            print(&#34;TRY CLOSING &lt;{}&gt; ON DESKTOP IF OPEN AND PRESS ENTER&#34;.format(file_name))
+            while not keyboard.is_pressed(&#39;enter&#39;):
+                pass
+            self.csv_writer(file_name, content)</code></pre>
+</details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.end_of_scroll_region"><code class="name">var <span class="ident">end_of_scroll_region</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def end_of_scroll_region(self):
+    return self.__end_of_scroll_region</code></pre>
+</details>
+</dd>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.last_position"><code class="name">var <span class="ident">last_position</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def last_position(self):
+    return self.__last_position</code></pre>
+</details>
+</dd>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.query"><code class="name">var <span class="ident">query</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def query(self):
+    return self.__query</code></pre>
+</details>
+</dd>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.sample_size"><code class="name">var <span class="ident">sample_size</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def sample_size(self):
+    return self.__sample_size</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.csv_writer"><code class="name flex">
+<span>def <span class="ident">csv_writer</span></span>(<span>self, file_name, content)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function writes all scraped tweets/comments to a csv file</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of file to create and write scraped data to</dd>
+<dt><strong><code>content</code></strong> :&ensp;<code>list</code></dt>
+<dd>Contents all scraped data in list form</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def csv_writer(self, file_name, content):
+    &#34;&#34;&#34;
+    This function writes all scraped tweets/comments to a csv file
+
+    Args:
+        file_name (str):  Name of file to create and write scraped data to
+        content (list): Contents all scraped data in list form
+    &#34;&#34;&#34;
+    try:
+        with open(file_name, &#34;w&#34;, newline=&#39;&#39;, encoding=&#39;utf-8&#39;) as csv_file:
+            writer = csv.writer(csv_file, delimiter=&#39;,&#39;)
+            try:
+                writer.writerows(content)
+            except UnicodeError:
+                pass
+        csv_file.close()
+    except PermissionError as e:
+        print(e.strerror)
+        print(&#34;TRY CLOSING &lt;{}&gt; ON DESKTOP IF OPEN AND PRESS ENTER&#34;.format(file_name))
+        while not keyboard.is_pressed(&#39;enter&#39;):
+            pass
+        self.csv_writer(file_name, content)</code></pre>
+</details>
+</dd>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.fluent_wait"><code class="name flex">
+<span>def <span class="ident">fluent_wait</span></span>(<span>self, browser_object, element_class_name, max_wait, attempt=0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Used to wait until specified element is loaded on page</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>browser_object</code></strong> :&ensp;<code>WebDriver</code></dt>
+<dd>Current instance of WebDriver/Browser that is being scraped</dd>
+<dt><strong><code>element_class_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of element to wait for</dd>
+<dt><strong><code>max_wait</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum time to wait before exception is raised (Can't wait forever)</dd>
+<dt><strong><code>attempt</code></strong> :&ensp;<code>int</code></dt>
+<dd>Tracks number of tries</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fluent_wait(self, browser_object, element_class_name, max_wait, attempt=0):
+    &#34;&#34;&#34;
+    Used to wait until specified element is loaded on page
+
+    Args:
+        browser_object (WebDriver): Current instance of WebDriver/Browser that is being scraped
+        element_class_name (str): Name of element to wait for
+        max_wait (int): Maximum time to wait before exception is raised (Can&#39;t wait forever)
+        attempt (int): Tracks number of tries
+    &#34;&#34;&#34;
+    try:
+        WebDriverWait(browser_object, max_wait, poll_frequency=0.5,
+                      ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException]).until(
+            EC.visibility_of_all_elements_located((By.CLASS_NAME, element_class_name))
+        )
+    except TimeoutException:
+        pass
+    except StaleElementReferenceException:
+        if attempt == 2:
+            pass
+        self.fluent_wait(browser_object, element_class_name, attempt + 1)</code></pre>
+</details>
+</dd>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.initialise_webdriver"><code class="name flex">
+<span>def <span class="ident">initialise_webdriver</span></span>(<span>self, fqdn)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uses Selenium WebDriver to open twitter/reddit search results for query</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>fqdn</code></strong> :&ensp;<code>str</code></dt>
+<dd>Full url to directly access search results of query</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def initialise_webdriver(self, fqdn):
+    &#34;&#34;&#34;
+    Uses Selenium WebDriver to open twitter/reddit search results for query
+
+    Args:
+        fqdn (str): Full url to directly access search results of query
+    &#34;&#34;&#34;
+    chrome_options = Options()
+    chrome_options.add_experimental_option(&#34;detach&#34;, True)
+    chrome_options.add_experimental_option(&#39;excludeSwitches&#39;, [&#39;enable-logging&#39;])
+    chrome_options.add_argument(&#34;--headless&#34;)
+    chrome_options.add_argument(&#34;--disable-extensions&#34;)
+    chrome_options.add_argument(&#34;--disable-dev-shm-usage&#34;)
+    chrome_options.add_argument(&#34;--no-sandbox&#34;)
+    chrome_options.add_argument(&#34;--window-size=1920,1200&#34;)
+    chrome_options.add_argument(&#34;--disable-notifications&#34;)
+    browser = webdriver.Chrome(options=chrome_options)
+    browser.get(fqdn)
+    sleep(5)
+    return browser</code></pre>
+</details>
+</dd>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.scrape"><code class="name flex">
+<span>def <span class="ident">scrape</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def scrape(self):
+    pass</code></pre>
+</details>
+</dd>
+<dt id="1009-crawler-merged_ProgramNLP.Scraper.Scraper.scroll_down_page"><code class="name flex">
+<span>def <span class="ident">scroll_down_page</span></span>(<span>self, driver, last_position, num_seconds_to_load=2, scroll_attempt=0, max_attempts=5)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Called when end of page is reached to load more tweets and to retrieve more comments</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>driver</code></strong> :&ensp;<code>WebDriver</code></dt>
+<dd>WebDriver instance, browser</dd>
+<dt><strong><code>last_position</code></strong> :&ensp;<code>int</code></dt>
+<dd>Location of page</dd>
+<dt><strong><code>num_seconds_to_load</code></strong> :&ensp;<code>int</code></dt>
+<dd>Time to sleep so page can load all elements</dd>
+<dt><strong><code>scroll_attempt</code></strong> :&ensp;<code>int</code></dt>
+<dd>Track number of tries to scroll</dd>
+<dt><strong><code>max_attempts</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum number of tries</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def scroll_down_page(self, driver, last_position, num_seconds_to_load=2, scroll_attempt=0, max_attempts=5):
+    &#34;&#34;&#34;
+    Called when end of page is reached to load more tweets and to retrieve more comments
+
+    Args:
+        driver (WebDriver): WebDriver instance, browser
+        last_position (int): Location of page
+        num_seconds_to_load (int): Time to sleep so page can load all elements
+        scroll_attempt (int): Track number of tries to scroll
+        max_attempts (int): Maximum number of tries
+    &#34;&#34;&#34;
+    self.end_of_scroll_region = False
+    driver.execute_script(&#34;window.scrollTo(0, document.body.scrollHeight);&#34;)
+    sleep(num_seconds_to_load)
+    curr_position = driver.execute_script(&#34;return window.pageYOffset;&#34;)
+    if curr_position == self.last_position:
+        if scroll_attempt &lt; max_attempts:
+            end_of_scroll_region = True
+        else:
+            self.scroll_down_page(last_position, curr_position, scroll_attempt + 1)
+    self.last_position = curr_position
+    return self.last_position, self.end_of_scroll_region</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="1009-crawler-merged_ProgramNLP" href="index.html">1009-crawler-merged_ProgramNLP</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper">Scraper</a></code></h4>
+<ul class="">
+<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.csv_writer" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.csv_writer">csv_writer</a></code></li>
+<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.end_of_scroll_region" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.end_of_scroll_region">end_of_scroll_region</a></code></li>
+<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.fluent_wait" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.fluent_wait">fluent_wait</a></code></li>
+<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.initialise_webdriver" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.initialise_webdriver">initialise_webdriver</a></code></li>
+<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.last_position" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.last_position">last_position</a></code></li>
+<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.query" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.query">query</a></code></li>
+<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.sample_size" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.sample_size">sample_size</a></code></li>
+<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.scrape" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.scrape">scrape</a></code></li>
+<li><code><a title="1009-crawler-merged_ProgramNLP.Scraper.Scraper.scroll_down_page" href="#1009-crawler-merged_ProgramNLP.Scraper.Scraper.scroll_down_page">scroll_down_page</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

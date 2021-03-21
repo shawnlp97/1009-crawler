@@ -1,23 +1,26 @@
+"""TwitterScraper.py contains subclass of Scraper, TwitterScraper and its attributes plus functions """
+
 from Scraper import Scraper
 from bs4 import BeautifulSoup
 import CustomExceptions as ex
 
-
 class TwitterScraper(Scraper):
     """
     The TwitterScraper object is used to scrape the content of tweets based on a query string (Name of vaccine)
-    Amount of data to be scraped is determined by user input
     
     Args:
-        query (str): Used as part of fully qualified domain name to to directly open twitter to display search results.
-        sample_size (int): Controls number of tweets that webself.browser will scrape from twitter
+        Scraper (class): inherit general attributes and functions needed for scraping from superclass
+        query (str): Used as part of fully qualified domain name to to directly open Twitter to display search results.
+        sample_size (int): Controls number of tweets/posts that will be scraped from the social media
 
     Attributes/Class variables:
-        url (str): base url of twitter. First part of fully qualified domain name
-        tab (str): Last part of twitter fuller qualified domain name
-        vaccine_sentiment (int): Total sentiment of all tweets, obtained using textblob
-        twitter_post (set): Stores iterable tuples of tweets and their data
+        url (str): base url of Twitter. First part of fully qualified domain name
+        tab (str): Last part of twitter fully qualified domain name
+        tweet_attr (str): CSS selector of element used to store body of tweet in twitter
+        
+        twitter_post (set): Self-defined set subclass to check for duplicate tweets
         csv_input_formatter (list): List that stores content of tweets to be written into csv file
+        file_name (str): Name of csv file to write scraped data to. Derived from search term/query
         fully_qualified_domain (str): Full URL used to directly open twitter with search results
         browser (webdriver): Starts a selenium webdriver instance which open twitter search results in chrome
     """
@@ -25,8 +28,8 @@ class TwitterScraper(Scraper):
     url = "https://twitter.com/search?q="
     tab = "&f=live"
     tweet_attr = {"class":
-                      "css-901oao r-18jsvk2 r-1qd0xha r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-bnwqim r-qvutc0"}
-
+                       "css-901oao r-18jsvk2 r-1qd0xha r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-bnwqim r-qvutc0"}
+                       
     def __init__(self, query, sample_size):
         super().__init__(query, sample_size)
         self.__twitter_post = ex.Set_duplicate_detector()
@@ -80,8 +83,10 @@ class TwitterScraper(Scraper):
         """
         Main method that scrapes data from twitter into a form where it can be written to a .csv file.
 
-        Calculates the sentiment of each tweet parsed from twitter using textblob and stores the total
-        vaccine sentiment of all tweets in sample for calculation of average in main program.
+        Prepares scraped tweets to be analyzed by TextBlob in the VaccinePolarity class
+        by appending each tweet to csv_input_formatter list
+
+        Scraping will continue until sample_size = 0
         """
         print("\n********************BEGIN TWITTER SCRAPE FOR QUERY: <{}>********************\n".format(self.query))
         while not self.end_of_scroll_region and self.sample_size > 0:
@@ -111,4 +116,3 @@ class TwitterScraper(Scraper):
         print("\n********************END TWITTER SCRAPE FOR QUERY: <{}>********************\n".format(self.query))
         for item in self.twitter_post:
             self.csv_input_formatter.append([item])
-        return self.csv_input_formatter

@@ -1,3 +1,5 @@
+""" test_headless.py used to verify if chromeoptions are working as intended """
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 options = Options()
